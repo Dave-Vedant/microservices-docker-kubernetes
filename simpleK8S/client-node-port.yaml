@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service 
+metadata:
+  name: client-node-port
+spec:
+  type: NodePort
+  ports:
+    - port: 3050         # 
+      targetPort: 3000   # To POD 
+      nodePort: 31515
+  selector:
+    component: web
+
+# service ojbect type has four other types
+# 1. CluserIP 2. NodePOrt 3. LoadBalancer 4.Ingress
+
+# EXPLAINATION of all three ports
+# port: 3050 other pod that need client ports
+# targetport: 3000 (transfer request to multi-client port)
+# nodeport: 31515 (need in browser - expose to outside world) between (30000 -32767)
+
+# Final Port flow : broser(outside world) -> kube proxy -> [PORT: 31515] -> service[port: 3050] -> [Port: 3000] -> multi-container(docker defined images)
