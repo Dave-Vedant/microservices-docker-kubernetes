@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment                   # object
+metadata:
+    name: client-Deployment
+spec:
+    replicas: 1             # can add or delete as per requirements (such as - how many workder need according to load)
+    selector:
+        matchLabels:
+            component: web           
+    template:
+        metadata:
+            labels:
+                component: web       # pod label
+        spec:
+            containers:
+                - name: client
+                  image: vedantdave77/docker-client
+                  ports:
+                    - containerPort: 3000
+                  resources:
+                    limits:
+                    memory: 512Mi
+                    cpu: "1"
+                  requests:
+                    memory: 256Mi
+                    cpu: "0.2"
