@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod                       #(its, object type) for k8s wrapping, solve port mapping issue and internal communication
+metadata:
+  name: client-pod
+  labels:
+    component: web             # must match with selector (section of client(sevice) node)
+spec:
+  containers:
+    - name: client
+      image: vedantdave77/docker-client
+      ports:
+        - containerPort:3000
+      resources:             # To solve error (One or more containers do not have resource limits (Kubernetes) warning in vscode kubernetes tools)
+      limits:
+        memory: 512Mi
+        cpu: "1"
+      requests:
+        memory: 256Mi
+        cpu: "0.2"
+
